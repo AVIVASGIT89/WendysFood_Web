@@ -1,0 +1,84 @@
+/*Cambiar color hover tr (modifica bootstrap)*/
+.table-hover tbody tr:hover {
+	background-color: rgba(0, 128, 0, 0.10);
+}
+
+
+/*Color de cabecera de tabla*/
+th {
+	color: white;
+	background: #0b6730;
+}
+
+
+/*Alinear items dentro hacia abajo*/
+.items-abajo{
+	display:flex; 
+	align-items:flex-end;
+}
+
+
+.items-separados{
+	gap: 15px;
+}
+
+
+/* -- tabla  Reg Venta--*/
+.tabla-registro {
+	font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+	font-size: 13px;
+	border: 1px solid #ddd;
+	line-height: 1.42857143;
+    color: #333;
+}
+.tabla-registro th {
+	padding: 5px 10px;
+}
+.tabla-registro td {
+	padding: 3px 10px;
+}
+.tabla-registro tr{
+	border: 1px solid #ddd;
+}
+.tabla-registro tr:hover{
+	background-color: rgba(0, 128, 0, 0.10);
+}
+
+
+/* -- Centrar todos los th --*/
+.table th {
+	text-align: center;
+}
+
+
+/*Para efecto Cargando.....*/
+#loading-screen {
+	background-color: rgba(25,25,25,0.7);
+	height: 100%;
+	width: 100%;
+	position: fixed;
+	z-index: 9999;
+	margin-top: 0;
+	top: 0;
+	text-align: center;
+  }
+  #loading-screen img {
+	width: 100px;
+	height: 100px;
+	position: relative;
+	margin-top: -50px;
+	margin-left: -50px;
+	top: 50%;
+  }
+
+
+/* Efecto parpadeo amarillo */
+@keyframes anim{
+	0% {background-color: #ff0;} /*Amarillo*/
+	50% {background-color: #fff;} /*Blanco*/
+}
+.parpadeo {
+  animation-name: anim;
+  animation-duration: 2s;
+  animation-iteration-count: infinite;
+}

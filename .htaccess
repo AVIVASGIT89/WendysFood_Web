@@ -1,0 +1,8 @@
+#impedimos el acceso a las carpetas del directorio del proyecto
+Options All -Indexes
+
+#permitimos URLs personalizadas
+RewriteEngine On
+
+#definimos los caracteres permitidos que tendran las urls personalizadas y definimos la variable GET que viajará en la url("ruta" para este caso)
+RewriteRule ^([-a-zA-Z0-9]+)$ index.php?ruta=$1
