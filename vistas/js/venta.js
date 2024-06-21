@@ -457,8 +457,6 @@ $("#btnRegistrarPago").click(function(){
 //Anular venta desde reporte detalle
 function anularOrdenFromDetalle(idVenta){
 
-    //alert("llega: " + idVenta); return;
-
     var datos = new FormData();
     datos.append("accion", "cancelarVentaFromDetalle");
     datos.append("idVenta", idVenta);
@@ -648,12 +646,13 @@ $("#btnRegistrarVenta").click(function(){
     }
 
     if(tipoVenta == "2"){
+
         if(clienteDelivery == ""){
-            alert("Debe ingresar el nombre de cliente");
-            $('#clienteDelivery').focus();
-            $("#btnRegistrarVenta").prop('disabled', false);
-            return;
+
+            clienteDelivery = "Cliente Delivery";
+
         }
+
     }
 
     //Variable para almacenar la lista de productos
@@ -720,7 +719,13 @@ $("#btnRegistrarVenta").click(function(){
 
             if(respuesta["resultado"] == "ok"){
 
-                imprimirOrden(listaProductos, nroMesa, clienteDelivery);
+                if(!$("#noImprimir").prop("checked")){
+
+                    //Si el check No esta marcado, Imprime...
+                    imprimirOrden(listaProductos, nroMesa, clienteDelivery);
+                    //alert("Si imprime");
+                    
+                }
 
                 Swal.fire({
                     title: "Orden registrada correctamente",

@@ -59,25 +59,6 @@ $("#btnRegistroVentas").click(function(){
                     estadoVenta = "Otro";
                 }
 
-                /*
-                switch(venta.ESTADO_VENTA){
-                    case 1:
-                        estadoVenta = '<span class="badge badge-warning">Pendiente</span>';
-                        botonAnular = '';
-                        break;
-                    case 2:
-                        estadoVenta = '<span class="badge badge-success">Finalizado</span>';
-                        botonAnular = '<button class="btn btn-sm btn-danger" title="Anular" onclick="anularOrdenFromDetalle('+venta.ID_VENTA+');"><i class="fas fa-times-circle"></i></button>';
-                        break;
-                    case 3:
-                        estadoVenta = '<span class="badge badge-danger">Anulado</span>';
-                        botonAnular = '';
-                        break;
-                    default:
-                        estadoVenta = "Otro";
-                }*/
-
-
                 i++;
                 totalMontoVenta += parseFloat(venta.TOTAL_VENTA);
 
@@ -140,6 +121,16 @@ $("#btnRegistroVentas").click(function(){
         }
 
     });
+
+});
+
+
+//Mostrar productos de orden cancelada
+$(".productosOrden").click(function(){
+
+    var idVenta = $(this).attr("idVenta");
+
+    mostratDetalleVenta(idVenta);
 
 });
 

@@ -142,8 +142,9 @@
                                 if($delivery["ESTADO_VENTA"] == "1"){
                                   echo '<button class="btn btn-success registrarPago" idVenta="'.$delivery["ID_VENTA"].'" nromesa="Delivery" title="Cobrar"><i class="fas fa-money-bill-alt"></i></button>';
                                   echo '<button class="btn btn-warning modificarOrden" idVenta="'.$delivery["ID_VENTA"].'" nromesa="Delivery" title="Modificar orden"><i class="fas fa-pen"></i></button>';
+                                }else{
+                                  echo '<button class="btn btn-info productosOrden" idVenta="'.$delivery["ID_VENTA"].'" title="ver productos"><i class="fas fa-eye"></i></button>';
                                 }
-
                                 '</div>
                               </td>
                             </tr>';
@@ -234,7 +235,9 @@
             </table>
           </div>
 
-          <br>
+          <div class="d-flex justify-content-end">
+            <label><input type="checkbox" id="noImprimir"/> No Imprimir</label>
+          </div>
 
           <div id="divClienteDelivery">
             <div class="col-4" style="margin: 0 auto;">
@@ -381,3 +384,37 @@
     <!-- /.modal-dialog -->
   </div>
   <!-- /.modal -->
+
+
+  <!-- Modal detalle venta- -->
+  <div class="modal fade" id="modalDetalleVenta">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Detalle</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <table class="table table-sm table-striped table-hover">
+            <thead>
+              <th>#</th>
+              <th>Cantidad</th>
+              <th>Producto</th>
+              <th>Precio</th>
+              <th>Subtotal</th>
+            </thead>
+            <tbody id="tbodyProductosVenta">
+
+            </tbody>
+          </table>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+        </div>
+      </div>
+      <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+  </div>
