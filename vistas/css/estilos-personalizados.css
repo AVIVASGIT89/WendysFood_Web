@@ -1,6 +1,6 @@
 /*Cambiar color hover tr (modifica bootstrap)*/
 .table-hover tbody tr:hover {
-	background-color: rgba(0, 128, 0, 0.10);
+	background-color: rgba(225, 225, 0, 0.3);
 }
 
 
