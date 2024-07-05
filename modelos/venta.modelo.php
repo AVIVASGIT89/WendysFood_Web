@@ -34,32 +34,38 @@ class ModeloVenta{
     //Listar deliverys de fecha actual (hoy)
     static public function mdlListarDeliveryHoy(){
 
-        $stmt = Conexion::conectar()->prepare("(SELECT V.ID_VENTA,
-                                                        V.TIPO_VENTA,
-                                                        V.ESTADO_VENTA,
-                                                        V.TOTAL_VENTA,
-                                                        V.USUARIO_VENTA,
-                                                        V.FECHA_VENTA,
-                                                        V.CLIENTE_DELIVERY
-                                                FROM venta V
-                                                WHERE V.TIPO_VENTA = 2
-                                                AND V.ESTADO_VENTA = 1
-                                                AND V.ESTADO_REGISTRO = 1
-                                                ORDER BY V.FECHA_VENTA DESC)
-                                                UNION
-                                                (SELECT V.ID_VENTA,
-                                                        V.TIPO_VENTA,
-                                                        V.ESTADO_VENTA,
-                                                        V.TOTAL_VENTA,
-                                                        V.USUARIO_VENTA,
-                                                        V.FECHA_VENTA,
-                                                        V.CLIENTE_DELIVERY
-                                                FROM venta V
-                                                WHERE V.TIPO_VENTA = 2
-                                                AND DATE_FORMAT(V.FECHA_VENTA, '%Y-%m-%d') = CURDATE()
-                                                AND V.ESTADO_VENTA IN (2, 3)
-                                                AND V.ESTADO_REGISTRO = 1
-                                                ORDER BY V.FECHA_VENTA DESC)");
+        $stmt = Conexion::conectar()->prepare("(SELECT ID_VENTA,
+                                                        TIPO_VENTA,
+                                                        ESTADO_VENTA,
+                                                        TOTAL_VENTA,
+                                                        USUARIO_VENTA,
+                                                        CLIENTE_DELIVERY,
+                                                        FECHA_VENTA,
+                                                        1 AS ORDER_COLUMN
+                                                FROM venta
+                                                WHERE TIPO_VENTA = 2
+                                                AND ESTADO_VENTA = 1
+                                                AND ESTADO_REGISTRO = 1
+                                                ORDER BY FECHA_VENTA DESC)
+                                                
+                                                UNION ALL
+
+                                                (SELECT ID_VENTA,
+                                                        TIPO_VENTA,
+                                                        ESTADO_VENTA,
+                                                        TOTAL_VENTA,
+                                                        USUARIO_VENTA,
+                                                        CLIENTE_DELIVERY,
+                                                        FECHA_VENTA,
+                                                        2 AS ORDER_COLUMN
+                                                FROM venta
+                                                WHERE TIPO_VENTA = 2
+                                                AND ESTADO_VENTA IN (2, 3)
+                                                AND ESTADO_REGISTRO = 1
+                                                AND DATE_FORMAT(FECHA_VENTA, '%Y-%m-%d') = DATE_FORMAT(NOW(), '%Y-%m-%d')
+                                                ORDER BY FECHA_VENTA DESC)
+                                                
+                                                ORDER BY ORDER_COLUMN, FECHA_VENTA DESC");
 
         $stmt -> execute();
 
