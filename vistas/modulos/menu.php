@@ -31,6 +31,7 @@
               </p>
             </a>
           </li>
+
           <li class="nav-item">
             <a href="productos" class="nav-link">
               <i class="nav-icon fas fa-box"></i>
@@ -39,6 +40,7 @@
               </p>
             </a>
           </li>
+
           <li class="nav-item">
             <a href="pagos" class="nav-link">
               <i class="nav-icon fas fa-file-invoice-dollar"></i>
@@ -47,6 +49,7 @@
               </p>
             </a>
           </li>
+
           <?php
           if($_SESSION["sRolUsuario"] == "1"){
             echo '<li class="nav-item">
@@ -59,6 +62,7 @@
                   </li>';
           }
           ?>
+
           <li class="nav-item">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-signal"></i>
@@ -92,6 +96,25 @@
               </li>
             </ul>
           </li>
+
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-comments"></i>
+              <p>
+              Notificaciones
+              <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="notificaciones" class="nav-link">
+                  <i class="fas fa-paper-plane nav-icon text-info"></i>
+                  <p>Enviar notificacion</p>
+                </a>
+              </li>
+            </ul>
+          </li>  
+
         </ul>
       </nav>
       <!-- /.sidebar-menu -->
