@@ -66,6 +66,8 @@
                $_GET["ruta"] == "resumen-ventas" ||
                $_GET["ruta"] == "registro-ventas" ||
                $_GET["ruta"] == "usuarios" ||
+               $_GET["ruta"] == "notificaciones" ||
+               $_GET["ruta"] == "clientes" ||
                $_GET["ruta"] == "salir"){
 
                 include "modulos/".$_GET["ruta"].".php";
@@ -99,12 +101,14 @@
 </div>
 
 
+<script src="../ambientesejecucion/wendysfood.js"></script>
 <script src="vistas/js/plantilla.js"></script>
 <script src="vistas/js/producto.js"></script>
 <script src="vistas/js/usuario.js"></script>
 <script src="vistas/js/venta.js"></script>
 <script src="vistas/js/pago.js"></script>
 <script src="vistas/js/reportes.js"></script>
+<script src="vistas/js/notificaciones.js"></script>
 
 </body>
 </html>
