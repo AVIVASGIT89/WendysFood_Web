@@ -49,6 +49,73 @@ function registroNotificaciones(){
 }
 
 
+//Registro de clientes
+function registroClientes(){
+
+    //Ejecuta el efecto cargando...
+	var screen = $('#loading-screen');
+	configureLoadingScreen(screen);
+
+    $.ajax({
+        url: ambienteEjecucion + "/apiwendysfood/cliente/registro-clientes",
+        method: "GET",
+        dataType: "json",
+        success: function(respuesta){
+
+            //console.log("respuesta:", respuesta); return;
+
+            $("#tablaClientes").DataTable().destroy();
+
+            var i = 0;
+            var puntosColor;
+            var msjEnviado;
+            var envioColor;
+            
+            var tbody = $("#tbodyRegistroClientes");
+			tbody.empty();
+
+            respuesta.clientes.forEach(function(cliente){
+
+                intPuntosCliente = cliente.PUNTOS_VIGENTES;
+                i++;
+
+                if(intPuntosCliente < 100){
+                    puntosColor = "badge badge-warning";
+                }else{
+                    puntosColor = "badge badge-info";
+                }
+
+                if(cliente.MSJ_ENVIADO == "1"){
+                    msjEnviado = "Enviado";
+                    envioColor = "badge badge-success";
+                }else{
+                    msjEnviado = "No enviado";
+                    envioColor = "badge badge-secondary";
+                }
+
+				tbody.append( 
+					'<tr>'+
+					  '<td>'+i+'</td>'+
+                      '<td align="center">'+cliente.CODIGO_CLIENTE+'</td>'+
+					  '<td align="center">'+cliente.IDENTIFICACION_CLIENTE+'</td>'+
+					  '<td>'+cliente.NOMBRE_CLIENTE+'</td>'+
+                      '<td align="center"><span class="'+puntosColor+'">'+cliente.PUNTOS_VIGENTES+'</span></td>'+
+                      '<td align="center">'+cliente.FECHA_REGISTRO+'</td>'+
+                      '<td align="center"><span class="'+envioColor+'">'+msjEnviado+'</span></td>'+
+					'</tr>'
+				);
+
+			});
+
+            crearDataTable("#tablaClientes");
+
+        }
+
+    });
+
+}
+
+
 //Procesar y mostrar nro de clientes
 $(".procesarClientes").click(function(){
 
@@ -177,5 +244,43 @@ $(".enviarNotificacion").click(function(){
         }
 
     });
+    
+});
+
+
+//Resetear campo Msj enviado cliente
+$(".resetCliente").click(function(){
+
+    if(confirm("Esta seguro de realizar el reset?")){
+
+        //Ejecuta el efecto cargando...
+        var screen = $('#loading-screen');
+        configureLoadingScreen(screen);
+
+        $.ajax({
+            url: ambienteEjecucion + "/apiwendysfood/notificaciones/resetClienteMsjEnvio",
+            method: "POST",
+            dataType: "json",
+            success: function(respuesta){
+
+                //console.log("respuesta:", respuesta);
+
+                if(respuesta.resultado == "ok"){
+
+                    alert("Reset realizado correctamente");
+
+                }else{
+
+                    alert("Error en reset de clientes");
+
+                }
+
+                window.location = "clientes";
+
+            }
+
+        });
+
+    }
     
 });

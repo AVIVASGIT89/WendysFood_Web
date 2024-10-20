@@ -107,6 +107,12 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
+                <a href="clientes" class="nav-link">
+                  <i class="fas fa-users nav-icon text-warning"></i>
+                  <p>Clientes</p>
+                </a>
+              </li>
+              <li class="nav-item">
                 <a href="notificaciones" class="nav-link">
                   <i class="fas fa-paper-plane nav-icon text-info"></i>
                   <p>Enviar notificacion</p>
