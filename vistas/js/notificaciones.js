@@ -8,15 +8,15 @@ function registroNotificaciones(){
         dataType: "json",
         success: function(respuesta){
 
-            //console.log("respuesta:", respuesta); return;
-
-            $("#tablaNotificaciones").DataTable().destroy();
+            //console.log("respuesta:", respuesta);
 
             var i = 0;
             var tipoColor;
             
             var tbody = $("#tbodyRegistroNotificaciones");
 			tbody.empty();
+
+            $("#tablaNotificaciones").DataTable().destroy();
 
             respuesta.notificaciones.forEach(function(notificacion){
 
@@ -62,9 +62,7 @@ function registroClientes(){
         dataType: "json",
         success: function(respuesta){
 
-            //console.log("respuesta:", respuesta); return;
-
-            $("#tablaClientes").DataTable().destroy();
+            //console.log("respuesta:", respuesta);
 
             var i = 0;
             var puntosColor;
@@ -73,6 +71,8 @@ function registroClientes(){
             
             var tbody = $("#tbodyRegistroClientes");
 			tbody.empty();
+
+            $("#tablaClientes").DataTable().destroy();
 
             respuesta.clientes.forEach(function(cliente){
 
@@ -101,7 +101,13 @@ function registroClientes(){
 					  '<td>'+cliente.NOMBRE_CLIENTE+'</td>'+
                       '<td align="center"><span class="'+puntosColor+'">'+cliente.PUNTOS_VIGENTES+'</span></td>'+
                       '<td align="center">'+cliente.FECHA_REGISTRO+'</td>'+
+					  '<td align="center">'+cliente.CELULAR_CLIENTE+'</td>'+
                       '<td align="center"><span class="'+envioColor+'">'+msjEnviado+'</span></td>'+
+                      '<td align="center">'+
+                        '<div class="btn-group">'+
+                          '<button class="btn btn-warning editarCliente" title="Editar" idCliente="'+cliente.ID_CLIENTE+'"><i class="fas fa-pen"></i></button>'+
+                        '</div>'+
+                      '</td>'+
 					'</tr>'
 				);
 
@@ -272,6 +278,92 @@ $(".resetCliente").click(function(){
                 }else{
 
                     alert("Error en reset de clientes");
+
+                }
+
+                window.location = "clientes";
+
+            }
+
+        });
+
+    }
+    
+});
+
+
+//Inicio para editar cliente
+$(document).on("click", ".editarCliente", function(){
+
+    var idCliente = $(this).attr("idCliente");
+
+    $.ajax({
+        url: ambienteEjecucion + "/apiwendysfood/cliente/idcliente/" + idCliente,
+        method: "GET",
+        dataType: "json",
+        success: function(respuesta){
+
+            //console.log("respuesta:", respuesta);
+
+            $("#editarIdentificacion").val(respuesta.cliente.IDENTIFICACION_CLIENTE);
+            $("#editarNombre").val(respuesta.cliente.NOMBRE_CLIENTE);
+            $("#editarApellido").val(respuesta.cliente.APELLIDO_CLIENTE);
+            $("#editarPuntos").val(respuesta.cliente.PUNTOS_VIGENTES);
+            $("#editarCelular").val(respuesta.cliente.CELULAR_CLIENTE);
+            $("#idCliente").val(respuesta.cliente.ID_CLIENTE);
+
+            //Mostramos modal "modalEditarCliente"
+            $("#modal-editar-cliente").modal('show');
+
+        }
+
+    });
+    
+});
+
+
+//Editar cliente
+$("#btnEditarCliente").click(function(){
+
+    if(confirm("Esta seguro que desea actualizar el cliente?")){
+
+        var editarIdentificacion = $("#editarIdentificacion").val();
+        var editarNombre = $("#editarNombre").val();
+        var editarApellido = $("#editarApellido").val();
+        var editarPuntos = $("#editarPuntos").val();
+        var editarCelular = $("#editarCelular").val();
+        var idCliente = $("#idCliente").val();
+
+        //Definimos las fechas
+        var datosCliente = {
+            "dnice": editarIdentificacion,
+            "nombre": editarNombre,
+            "apellido": editarApellido,
+            "celular": editarCelular,
+            "puntosCliente": editarPuntos,
+            "idCliente": idCliente
+        };
+
+        //Ejecuta el efecto cargando...
+        var screen = $('#loading-screen');
+        configureLoadingScreen(screen);
+
+        $.ajax({
+            url: ambienteEjecucion + "/apiwendysfood/cliente/actualizar",
+            method: "POST",
+            data: datosCliente,
+            dataType: "json",
+            success: function(respuesta){
+
+                //console.log("respuesta:", respuesta);
+
+                if(respuesta.resultado == "ok"){
+
+                    alert("Cliente actualizado correctamente");
+
+                }else{
+
+                    alert("Error en actualizacion de clientes");
 
                 }
 
