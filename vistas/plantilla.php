@@ -106,14 +106,14 @@
 </div>
 
 
-<script src="../ambientesejecucion/wendysfood.js"></script>
-<script src="vistas/js/plantilla.js"></script>
-<script src="vistas/js/producto.js"></script>
-<script src="vistas/js/usuario.js"></script>
-<script src="vistas/js/venta.js"></script>
-<script src="vistas/js/pago.js"></script>
-<script src="vistas/js/reportes.js"></script>
-<script src="vistas/js/notificaciones.js"></script>
+<script src="../ambientesejecucion/wendysfood.js?v=<?php echo(rand()); ?>"></script>
+<script src="vistas/js/plantilla.js?v=<?php echo(rand()); ?>"></script>
+<script src="vistas/js/producto.js?v=<?php echo(rand()); ?>"></script>
+<script src="vistas/js/usuario.js?v=<?php echo(rand()); ?>"></script>
+<script src="vistas/js/venta.js?v=<?php echo(rand()); ?>"></script>
+<script src="vistas/js/pago.js?v=<?php echo(rand()); ?>"></script>
+<script src="vistas/js/reportes.js?v=<?php echo(rand()); ?>"></script>
+<script src="vistas/js/notificaciones.js?v=<?php echo(rand()); ?>"></script>
 
 </body>
 </html>

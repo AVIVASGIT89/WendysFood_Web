@@ -2,9 +2,16 @@
 //Registro de ultimas notificaciones enviadas
 function registroNotificaciones(){
 
+    //Ejecuta el efecto cargando...
+	var screen = $('#loading-screen');
+	configureLoadingScreen(screen);
+
     $.ajax({
         url: ambienteEjecucion + "/apiwendysfood/notificaciones/consulta-notificaciones",
-        method: "GET",
+        method: "POST",
+        cache: false,
+        contentType: false,
+        processData: false,
         dataType: "json",
         success: function(respuesta){
 
@@ -58,7 +65,10 @@ function registroClientes(){
 
     $.ajax({
         url: ambienteEjecucion + "/apiwendysfood/cliente/registro-clientes",
-        method: "GET",
+        method: "POST",
+        cache: false,
+        contentType: false,
+        processData: false,
         dataType: "json",
         success: function(respuesta){
 
@@ -161,7 +171,10 @@ $(".procesarClientes").click(function(){
 
     $.ajax({
         url: URL,
-        method: "GET",
+        method: "POST",
+        cache: false,
+        contentType: false,
+        processData: false,
         dataType: "json",
         success: function(respuesta){
 
@@ -266,6 +279,9 @@ $(".resetCliente").click(function(){
         $.ajax({
             url: ambienteEjecucion + "/apiwendysfood/notificaciones/resetClienteMsjEnvio",
             method: "POST",
+            cache: false,
+            contentType: false,
+            processData: false,
             dataType: "json",
             success: function(respuesta){
 
@@ -299,7 +315,10 @@ $(document).on("click", ".editarCliente", function(){
 
     $.ajax({
         url: ambienteEjecucion + "/apiwendysfood/cliente/idcliente/" + idCliente,
-        method: "GET",
+        method: "POST",
+        cache: false,
+        contentType: false,
+        processData: false,
         dataType: "json",
         success: function(respuesta){
 
