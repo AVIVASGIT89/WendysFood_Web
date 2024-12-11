@@ -1,4 +1,4 @@
-//Reporte resumen ventas
+//Reporte registro ventas
 $("#btnRegistroVentas").click(function(){
 
     var fechaDesde = $("#fechaDesde").val();
@@ -27,14 +27,16 @@ $("#btnRegistroVentas").click(function(){
         dataType: "json",
         success: function(respuesta){
 
-            //console.log("respuesta:", respuesta); return;
+            //console.log("respuesta:", respuesta);
 
             $("#tablaRegistroVentas").DataTable().destroy();
 
             var i = 0;
             var totalMontoVenta = 0;
             var estadoVenta;
-            var botonAnular;
+
+            var botonAnular = '';
+            var botonSunat = '';
             
             var tbody = $("#tbodyRegistroVentas");
 			tbody.empty();
@@ -47,8 +49,19 @@ $("#btnRegistroVentas").click(function(){
                 }
                 else
                 if(venta.ESTADO_VENTA == "2"){
+
                     estadoVenta = '<span class="badge badge-success">Finalizado</span>';
                     botonAnular = '<button class="btn btn-sm btn-danger" title="Anular" onclick="anularOrdenFromDetalle('+venta.ID_VENTA+');"><i class="fas fa-times-circle"></i></button>';
+
+                    //Estado SUNAT
+                    if(venta.ENVIO_SUNAT == "0"){
+                        botonSunat = '<button class="btn btn-sm btn-primary" title="Enviar a SUNAT" onclick="mostrarModalComprobante('+venta.ID_VENTA+');"><i class="fas fa-file-upload"></i></button>';
+                    }
+                    else
+                    if(venta.ENVIO_SUNAT == "1"){
+                        botonSunat = '<button class="btn btn-sm btn-success" title="Descargar boleta"><i class="fas fa-file-download"></i></button>';
+                    }
+                    
                 }
                 else
                 if(venta.ESTADO_VENTA == "3"){
@@ -68,13 +81,18 @@ $("#btnRegistroVentas").click(function(){
 					  '<td align="center">'+venta.ID_VENTA+'</td>'+
                       '<td align="center">'+venta.TIPO_VENTA+'</td>'+
 					  '<td align="center">'+venta.FECHA_VENTA+'</td>'+
-					  '<td align="center"><a href="#" onclick="mostratDetalleVenta('+venta.ID_VENTA+');">'+venta.NRO_PRODUCTOS+'</a></td>'+
+					  '<td align="center"><a href="#" onclick="mostrarDetalleVenta('+venta.ID_VENTA+');">'+venta.NRO_PRODUCTOS+'</a></td>'+
                       '<td align="center">'+venta.TOTAL_VENTA+'</td>'+
 					  '<td align="center">'+estadoVenta+'</td>'+
 					  '<td align="center">'+venta.USUARIO_VENTA+'</td>'+
                       '<td align="center">'+
                         '<div class="btn-group">'+
                           botonAnular+
+                        '</div>'+
+                      '</td>'+
+                      '<td align="center">'+
+                        '<div class="btn-group">'+
+                          botonSunat+
                         '</div>'+
                       '</td>'+
 					'</tr>'
@@ -84,39 +102,7 @@ $("#btnRegistroVentas").click(function(){
             $("#spRegistroVentas").text(i);
             $("#spTotalVentas").text(totalMontoVenta.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})); //formato miles y 2 decimales
 
-            $('#tablaRegistroVentas').DataTable({
-
-                "responsive": true, 
-                "lengthChange": true, 
-                "autoWidth": false,
-                "language": {
-            
-                    "sProcessing":     "Procesando...",
-                    "sLengthMenu":     "Mostrar _MENU_ registros",
-                    "sZeroRecords":    "No se encontraron resultados",
-                    "sEmptyTable":     "Ningún dato disponible en esta tabla",
-                    "sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_",
-                    "sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0",
-                    "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
-                    "sInfoPostFix":    "",
-                    "sSearch":         "Buscar:",
-                    "sUrl":            "",
-                    "sInfoThousands":  ",",
-                    "sLoadingRecords": "Cargando...",
-                    "oPaginate": {
-                    "sFirst":    "Primero",
-                    "sLast":     "Último",
-                    "sNext":     "Siguiente",
-                    "sPrevious": "Anterior"
-                    },
-                    "oAria": {
-                        "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
-                        "sSortDescending": ": Activar para ordenar la columna de manera descendente"
-                    }
-            
-                }
-            
-            });
+            crearDataTable("tablaRegistroVentas");
 
         }
 
@@ -130,13 +116,13 @@ $(".productosOrden").click(function(){
 
     var idVenta = $(this).attr("idVenta");
 
-    mostratDetalleVenta(idVenta);
+    mostrarDetalleVenta(idVenta);
 
 });
 
 
 //Modal detalle venta
-function mostratDetalleVenta(idVenta){
+function mostrarDetalleVenta(idVenta){
 
     var datos = new FormData();
     datos.append("accion", "productosVenta");
@@ -152,7 +138,7 @@ function mostratDetalleVenta(idVenta){
         dataType: "json",
         success: function(respuesta){
 
-            //console.log("respuesta:", respuesta); return;
+            //console.log("respuesta:", respuesta);
 
             var i = 0;
             
@@ -175,6 +161,63 @@ function mostratDetalleVenta(idVenta){
 			});
 
             $("#modalDetalleVenta").modal('show');
+
+        }
+
+    });
+
+}
+
+
+//Mostrar detalle venta para generar comprobante electronico
+function mostrarModalComprobante(idVenta){
+
+    var datos = new FormData();
+    datos.append("accion", "productosVenta");
+    datos.append("idVenta", idVenta);
+
+    $.ajax({
+        url: "ajax/reportes.ajax.php",
+        method: "POST",
+        data: datos,
+        cache: false,
+        contentType: false,
+        processData: false,
+        dataType: "json",
+        success: function(respuesta){
+
+            //console.log("respuesta:", respuesta);
+
+            var i = 0;
+            var totalMontoVenta = 0;
+            
+            var tbody = $("#tbodyProductosVentaComprobante");
+			tbody.empty();
+
+            respuesta.forEach(function(producto){
+
+                i++;
+                totalMontoVenta += parseFloat(producto.SUBTOTAL);
+
+				tbody.append( 
+					'<tr>'+
+					  '<td>'+i+'</td>'+
+					  '<td align="center">'+producto.CANTIDAD+'</td>'+
+					  '<td>'+producto.NOMBRE_PRODUCTO+'</td>'+
+                      '<td align="right">'+producto.PRECIO_UNITARIO+'</td>'+
+					  '<td align="right">'+producto.SUBTOTAL+'</td>'+
+					'</tr>'
+				);
+			});
+
+            tbody.append( 
+                '<tr>'+
+                  '<td colspan="4" align="right"><b>Total</b></td>'+
+                  '<td align="right"><b>'+totalMontoVenta.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})+'</b></td>'+
+                '</tr>'
+            );
+
+            $("#modalGenerarComprobante").modal('show');
 
         }
 

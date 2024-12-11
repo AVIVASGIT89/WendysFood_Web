@@ -89,6 +89,7 @@
                 <th>Estado</th>
                 <th>Usuario</th>
                 <th>Opcion</th>
+                <th>SUNAT</th>
               </tr>
             </thead>
             <tbody id="tbodyRegistroVentas">
@@ -106,7 +107,7 @@
   <!-- /.content-wrapper -->
 
 
-<!-- Modales -->
+<!--------------------------------------- Modales -------------------------------->
   <!-- Modal detalle venta- -->
   <div class="modal fade" id="modalDetalleVenta">
     <div class="modal-dialog">
@@ -140,3 +141,67 @@
     <!-- /.modal-dialog -->
   </div>
   <!-- /.modal -->
+
+
+  <!-- Modal Generar Comprobante -->
+  <div class="modal fade" id="modalGenerarComprobante">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Generar comprobante electronico</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form id="facturaForm">
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                <label for="tipoDocumento">Tipo de Documento</label>
+                <select class="form-control" id="tipoDocumento" required>
+                    <option value="">-Seleccione-</option>
+                    <option value="1">Boleta</option>
+                    <option value="2">Factura</option>
+                </select>
+              </div>
+              <div class="form-group col-md-6">
+                <label for="identificacionCliente">Identificacion</label>
+                <div class="input-group">
+                  <input type="text" class="form-control" id="buscarCliente">
+                  <div class="input-group-append">
+                      <button class="btn btn-primary" type="button" id="btnBuscarCliente">Buscar</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="clienteNombre">Nombre del Cliente</label>
+              <input type="text" class="form-control" id="clienteNombre" required>
+            </div>
+            <div class="form-group">
+              <label for="fechaFactura">Fecha de Factura</label>
+              <input type="date" class="form-control" id="fechaFactura" value="<?php echo date("Y-m-d"); ?>" required>
+            </div>
+            <h5 class="mt-4">Productos</h5>
+            <table class="table table-sm table-striped table-hover">
+              <thead>
+                <th>#</th>
+                <th>Cantidad</th>
+                <th>Producto</th>
+                <th>Precio</th>
+                <th>Subtotal</th>
+              </thead>
+              <tbody id="tbodyProductosVentaComprobante">
+
+              </tbody>
+            </table>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+        </div>
+      </div>
+      <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+  </div>

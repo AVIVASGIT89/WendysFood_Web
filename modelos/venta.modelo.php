@@ -406,6 +406,7 @@ class ModeloVenta{
                                                       V.NRO_PRODUCTOS,
                                                       V.TOTAL_VENTA,
                                                       V.ESTADO_VENTA,
+                                                      V.ENVIO_SUNAT,
                                                       V.USUARIO_VENTA
                                                 FROM venta V
                                                 WHERE V.FECHA_VENTA BETWEEN '$fechaDesde 00:00:00' AND '$fechaHasta 23:59:59'
