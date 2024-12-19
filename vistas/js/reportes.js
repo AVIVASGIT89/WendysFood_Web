@@ -59,7 +59,7 @@ $("#btnRegistroVentas").click(function(){
                     }
                     else
                     if(venta.ENVIO_SUNAT == "1"){
-                        botonSunat = '<button class="btn btn-sm btn-success" title="Descargar boleta"><i class="fas fa-file-download"></i></button>';
+                        botonSunat = '<a href="vistas/modulos/comprobanteimpresion.php?idVenta='+venta.ID_VENTA+'" target="_blank" class="btn btn-sm btn-success" title="Descargar boleta"><i class="fas fa-file-download"></i></a>';
                     }
                     
                 }
@@ -102,7 +102,7 @@ $("#btnRegistroVentas").click(function(){
             $("#spRegistroVentas").text(i);
             $("#spTotalVentas").text(totalMontoVenta.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})); //formato miles y 2 decimales
 
-            crearDataTable("tablaRegistroVentas");
+            crearDataTable("#tablaRegistroVentas");
 
         }
 

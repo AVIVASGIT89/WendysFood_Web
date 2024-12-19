@@ -35,7 +35,8 @@ if($accion == "generarComprobante"){
         "idVenta" => $idVenta,
         "idCliente" => $idCliente,
         "serieVenta" => $serieComprobante,
-        "numeroVenta" => $numeroComprobante
+        "numeroVenta" => $numeroComprobante,
+        "tipoComprobante" => $tipoComprobante
     ];
 
     $empresa = [

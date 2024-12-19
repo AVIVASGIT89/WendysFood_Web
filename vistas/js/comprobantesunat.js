@@ -15,7 +15,7 @@ function mostrarModalComprobante(idVenta){
         dataType: "json",
         success: function(respuesta){
 
-            //console.log("respuesta:", respuesta);
+            console.log("respuesta:", respuesta);
 
             var i = 0;
             var totalMontoVenta = 0;
@@ -292,7 +292,10 @@ $("#btnRegistrarComprobante").click(function(){
                 }).then((result) => {
 
                     if (result.isConfirmed) {
-                        window.location = "inicio";
+                        
+                        window.open('vistas/modulos/comprobanteimpresion.php?idVenta='+idVenta, '_blank');
+                        window.location = "registro-ventas";
+
                     }
                     
                 });
