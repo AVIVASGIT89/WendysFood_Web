@@ -160,27 +160,27 @@
                 <label for="tipoDocumento">Tipo de Documento</label>
                 <select class="form-control" id="tipoDocumento" required>
                     <option value="">-Seleccione-</option>
-                    <option value="1">Boleta</option>
-                    <option value="2">Factura</option>
+                    <option value="03">Boleta</option>
+                    <option value="01">Factura</option>
                 </select>
               </div>
               <div class="form-group col-md-6">
-                <label for="identificacionCliente">Identificacion</label>
+                <label for="identificacionCliente">Identificacion</label> <span id="spFuenteIdentificacion" style="font-size: 10px;"></span>
                 <div class="input-group">
-                  <input type="text" class="form-control" id="buscarCliente">
+                  <input type="text" class="form-control" id="identificacionCliente">
                   <div class="input-group-append">
-                      <button class="btn btn-primary" type="button" id="btnBuscarCliente">Buscar</button>
+                      <button class="btn btn-primary" type="button" id="btnBuscarClienteIdentificacion">Buscar</button>
                   </div>
                 </div>
               </div>
             </div>
             <div class="form-group">
               <label for="clienteNombre">Nombre del Cliente</label>
-              <input type="text" class="form-control" id="clienteNombre" required>
+              <input type="text" class="form-control" id="clienteNombre" disabled>
             </div>
             <div class="form-group">
-              <label for="fechaFactura">Fecha de Factura</label>
-              <input type="date" class="form-control" id="fechaFactura" value="<?php echo date("Y-m-d"); ?>" required>
+              <label for="fechaVenta">Fecha de Factura</label>
+              <input type="date" class="form-control" id="fechaVenta" value="<?php echo date("Y-m-d"); ?>" required>
             </div>
             <h5 class="mt-4">Productos</h5>
             <table class="table table-sm table-striped table-hover">
@@ -192,13 +192,25 @@
                 <th>Subtotal</th>
               </thead>
               <tbody id="tbodyProductosVentaComprobante">
-
+                <!-- Aqui se agregaran los productos -->
               </tbody>
+
+              <tfoot>
+                <td colspan="4" align="right"><b>Total</b></td>
+                <td align="right"><b><span id="spTotalVentaComprobante">0</span></b></td>
+              </tfoot>
             </table>
+            <input type="hidden" id="fIdVenta" value="">
+            <input type="hidden" id="fVentaBase" value="">
+            <input type="hidden" id="fVentaIGV" value="">
+            <input type="hidden" id="fIdentificacionCliente" value="">
+            <input type="hidden" id="fTipoIdentificacionCliente" value="">
+            <input type="hidden" id="fIdCliente" value="">
           </form>
         </div>
-        <div class="modal-footer">
+        <div class="modal-footer justify-content-between">
           <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+          <button type="button" class="btn btn-success" id="btnRegistrarComprobante"><i class="fas fa-money-bill-alt"></i> Generar Comprobante</button>
         </div>
       </div>
       <!-- /.modal-content -->

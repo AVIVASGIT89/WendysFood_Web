@@ -104,6 +104,30 @@ function crearDataTable(tabla){
 }
 
 
+//Devolver hora actual
+function devolverHoraActual(){
+	
+    // Obtener la hora actual
+    const ahora = new Date();
+
+    // Extraer horas, minutos y segundos
+    let horas = ahora.getHours();
+    let minutos = ahora.getMinutes();
+    let segundos = ahora.getSeconds();
+
+    // Asegurarse de que tengan dos dígitos (agregar un 0 si es necesario)
+    horas = horas < 10 ? "0" + horas : horas;
+    minutos = minutos < 10 ? "0" + minutos : minutos;
+    segundos = segundos < 10 ? "0" + segundos : segundos;
+
+    // Formatear la hora como hh:mm:ss
+    const horaActual = `${horas}:${minutos}:${segundos}`;
+    
+    return horaActual;
+
+}
+
+
 
 //**************************** Validaciones de caracteres correctos en campos de Input ***********************************
 //-------------------------------- Validacion para Ingresar solo Numeros y con Dos Decimales --------------------------------

@@ -432,7 +432,9 @@ class ModeloVenta{
         $stmt = Conexion::conectar()->prepare("SELECT P.NOMBRE_PRODUCTO,
                                                       D.CANTIDAD,
                                                       D.PRECIO_UNITARIO,
-                                                      D.SUBTOTAL
+                                                      D.SUBTOTAL,
+                                                      D.SUBTOTAL_BASE,
+                                                      D.SUBTOTAL_IGV
                                                 FROM venta_detalle D
                                                 INNER JOIN producto P ON P.ID_PRODUCTO = D.ID_PRODUCTO
                                                 WHERE D.ID_VENTA = $idVenta
