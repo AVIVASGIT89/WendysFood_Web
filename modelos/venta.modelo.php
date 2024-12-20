@@ -429,13 +429,15 @@ class ModeloVenta{
     //Detalle venta
     static public function mdlProductosVenta($idVenta){
 
-        $stmt = Conexion::conectar()->prepare("SELECT P.NOMBRE_PRODUCTO,
-                                                      D.CANTIDAD,
-                                                      D.PRECIO_UNITARIO,
-                                                      D.SUBTOTAL,
-                                                      D.SUBTOTAL_BASE,
-                                                      D.SUBTOTAL_IGV
-                                                FROM venta_detalle D
+        $stmt = Conexion::conectar()->prepare("SELECT V.FECHA_VENTA, 
+                                                        P.NOMBRE_PRODUCTO,
+                                                        D.CANTIDAD,
+                                                        D.PRECIO_UNITARIO,
+                                                        D.SUBTOTAL,
+                                                        D.SUBTOTAL_BASE,
+                                                        D.SUBTOTAL_IGV
+                                                FROM venta V
+                                                INNER JOIN venta_detalle D ON D.ID_VENTA = V.ID_VENTA
                                                 INNER JOIN producto P ON P.ID_PRODUCTO = D.ID_PRODUCTO
                                                 WHERE D.ID_VENTA = $idVenta
                                                 AND D.ESTADO_REGISTRO = 1");

@@ -15,12 +15,13 @@ function mostrarModalComprobante(idVenta){
         dataType: "json",
         success: function(respuesta){
 
-            console.log("respuesta:", respuesta);
+            //console.log("respuesta:", respuesta);
 
             var i = 0;
             var totalMontoVenta = 0;
             var totalBase = 0;
             var totalIGV = 0;
+            var fechaVenta;
             
             var tbody = $("#tbodyProductosVentaComprobante");
 			tbody.empty();
@@ -31,6 +32,7 @@ function mostrarModalComprobante(idVenta){
                 totalMontoVenta += parseFloat(producto.SUBTOTAL);
                 totalBase += parseFloat(producto.SUBTOTAL_BASE);
                 totalIGV += parseFloat(producto.SUBTOTAL_IGV);
+                fechaVenta = producto.FECHA_VENTA;
 
 				tbody.append( 
 					'<tr>'+
@@ -44,8 +46,10 @@ function mostrarModalComprobante(idVenta){
                       '</td>'+
 					'</tr>'
 				);
+
 			});
 
+            $("#fechaVenta").val(fechaVenta);
             $("#fIdVenta").val(idVenta);
             $("#fVentaBase").val(totalBase.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}));
             $("#fVentaIGV").val(totalIGV.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}));
@@ -220,6 +224,8 @@ $("#btnRegistrarComprobante").click(function(){
         return;
     }
 
+    var fecha = $("#fechaVenta").val();
+
     //Capturamos datos del cliente
     var nombreCliente = $("#clienteNombre").val();
     var fIdentificacionCliente = $("#fIdentificacionCliente").val();
@@ -229,8 +235,8 @@ $("#btnRegistrarComprobante").click(function(){
     //Capturamos datos de la venta
     var idCliente = $("#fIdCliente").val();
     var idVenta = $("#fIdVenta").val();
-    var fechaVenta = $("#fechaVenta").val();
-    var horaActual = devolverHoraActual(); //obtenemos la hora actual desde la funcion "devolverHoraActual()" de plantilla.js
+    var fechaVenta = fecha.substring(0, 10);
+    var horaActual = fecha.substring(11, 19)
     var ventaBase = $("#fVentaBase").val();
     var ventaIGV = $("#fVentaIGV").val();
 
