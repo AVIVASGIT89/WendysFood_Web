@@ -59,6 +59,7 @@ $("#btnRegistroVentas").click(function(){
                     }
                     else
                     if(venta.ENVIO_SUNAT == "1"){
+                        botonAnular = '';
                         botonSunat = '<a href="vistas/modulos/comprobanteimpresion.php?idVenta='+venta.ID_VENTA+'" target="_blank" class="btn btn-sm btn-success" title="Descargar boleta"><i class="fas fa-file-download"></i></a>';
                     }
                     
@@ -67,6 +68,7 @@ $("#btnRegistroVentas").click(function(){
                 if(venta.ESTADO_VENTA == "3"){
                     estadoVenta = '<span class="badge badge-danger">Anulado</span>';
                     botonAnular = '';
+                    botonSunat = '';
                 }
                 else{
                     estadoVenta = "Otro";
@@ -103,6 +105,99 @@ $("#btnRegistroVentas").click(function(){
             $("#spTotalVentas").text(totalMontoVenta.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})); //formato miles y 2 decimales
 
             crearDataTable("#tablaRegistroVentas");
+
+        }
+
+    });
+
+});
+
+
+//Reporte ventas sunat
+$("#btnReporteVentasSunat").click(function(){
+
+    var fechaDesde = $("#fechaDesde").val();
+    var fechaHasta = $("#fechaHasta").val();
+    var tipoComprobante = $("#tipoComprobante").val();
+    var estadoEnvio = $("#estadoEnvio").val();
+
+    var datos = new FormData();
+    datos.append("accion", "ventasSunat");
+    datos.append("fechaDesde", fechaDesde);
+    datos.append("fechaHasta", fechaHasta);
+    datos.append("tipoComprobante", tipoComprobante);
+    datos.append("estadoEnvio", estadoEnvio);
+
+    //Ejecuta el efecto cargando...
+	var screen = $('#loading-screen');
+	configureLoadingScreen(screen);
+
+    $.ajax({
+        url: "ajax/reportes.ajax.php",
+        method: "POST",
+        data: datos,
+        cache: false,
+        contentType: false,
+        processData: false,
+        dataType: "json",
+        success: function(respuesta){
+
+            //console.log("respuesta:", respuesta);
+
+            $("#tablaReposteVentasSunat").DataTable().destroy();
+
+            var i = 0;
+            var totalMontoVenta = 0;
+
+            var botonDescargar = '';
+            
+            var tbody = $("#tbodyReporteVentasSunat");
+			tbody.empty();
+
+            respuesta.forEach(function(ventaSunat){
+
+                i++;
+                totalMontoVenta += parseFloat(ventaSunat.TOTAL_VENTA);
+                estadoEnvio;
+
+                if(ventaSunat.ENVIO_SUNAT == "1"){
+
+                    estadoEnvio = '<span class="badge badge-success">Finalizado</span>';
+                    botonDescargar = '<a href="vistas/modulos/comprobanteimpresion.php?idVenta='+ventaSunat.ID_VENTA+'" target="_blank" class="btn btn-sm btn-success" title="Descargar boleta"><i class="fas fa-file-download"></i></a>';
+
+                }else if(ventaSunat.ENVIO_SUNAT == "2"){
+
+                    estadoEnvio = '<span class="badge badge-warning">Observado</span>';
+                    botonDescargar = '<a href="vistas/modulos/comprobanteimpresion.php?idVenta='+ventaSunat.ID_VENTA+'" target="_blank" class="btn btn-sm btn-warning" title="Descargar boleta"><i class="fas fa-file-download"></i></a>';
+
+                }else{
+
+                    estadoEnvio = '<span class="badge badge-secondary">Otro</span>';
+
+                }
+
+				tbody.append( 
+					'<tr>'+
+					  '<td>'+i+'</td>'+
+                      '<td align="center">'+ventaSunat.FECHA_VENTA+'</td>'+
+                      '<td align="center">'+ventaSunat.TIPO_COMPROBANTE+'</td>'+
+                      '<td align="center">'+ventaSunat.SERIE_VENTA_SUNAT+'</td>'+
+                      '<td align="center">'+ventaSunat.NRO_VENTA_SUNAT+'</td>'+
+                      '<td align="center">'+ventaSunat.TOTAL_VENTA+'</td>'+
+                      '<td align="center">'+estadoEnvio+'</td>'+
+                      '<td align="center">'+
+                        '<div class="btn-group">'+
+                          botonDescargar+
+                        '</div>'+
+                      '</td>'+
+					'</tr>'
+				);
+			});
+
+            $("#spRegistroVentas").text(i);
+            $("#spTotalVentas").text(totalMontoVenta.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})); //formato miles y 2 decimales
+
+            crearDataTable("#tablaReposteVentasSunat");
 
         }
 

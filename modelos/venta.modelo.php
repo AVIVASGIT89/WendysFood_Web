@@ -24,8 +24,6 @@ class ModeloVenta{
 
         return $stmt -> fetchAll();    //Devolvemos todos los registros encontrados
 
-        $stmt -> close();
-
         $stmt = null;
 
     }
@@ -70,8 +68,6 @@ class ModeloVenta{
         $stmt -> execute();
 
         return $stmt -> fetchAll();    //Devolvemos todos los registros encontrados
-
-        $stmt -> close();
 
         $stmt = null;
 
@@ -133,10 +129,6 @@ class ModeloVenta{
 
         }
 
-        $stmt -> close();
-
-        $pdo -> close();
-
         $stmt = null;
 
         $pdo = null;
@@ -180,8 +172,6 @@ class ModeloVenta{
 
         }
 
-        $stmt -> close();
-
         $stmt = null;
 
     }
@@ -215,8 +205,6 @@ class ModeloVenta{
 
         return $stmt -> fetchAll();    //Devolvemos todos los registros encontrados
 
-        $stmt -> close();
-
         $stmt = null;
 
     }
@@ -241,8 +229,6 @@ class ModeloVenta{
             return "error";
 
         }
-
-        $stmt -> close();
 
         $stmt = null;
 
@@ -271,8 +257,6 @@ class ModeloVenta{
             return "error";
 
         }
-
-        $stmt -> close();
 
         $stmt = null;
 
@@ -304,8 +288,6 @@ class ModeloVenta{
 
         }
 
-        $stmt -> close();
-
         $stmt = null;
 
     }
@@ -328,8 +310,6 @@ class ModeloVenta{
             return "error";
 
         }
-
-        $stmt -> close();
 
         $stmt = null;
 
@@ -368,8 +348,6 @@ class ModeloVenta{
         $stmt -> execute();
 
         return $stmt -> fetchAll();    //Devolvemos todos los registros encontrados
-
-        $stmt -> close();
 
         $stmt = null;
 
@@ -419,8 +397,6 @@ class ModeloVenta{
 
         return $stmt -> fetchAll();    //Devolvemos todos los registros encontrados
 
-        $stmt -> close();
-
         $stmt = null;
 
     }
@@ -445,8 +421,6 @@ class ModeloVenta{
         $stmt -> execute();
 
         return $stmt -> fetchAll();    //Devolvemos todos los registros encontrados
-
-        $stmt -> close();
 
         $stmt = null;
 
@@ -617,6 +591,57 @@ class ModeloVenta{
             //$response = array("hecho" => false);
             return "error";
         }
+
+    }
+
+
+    //Reporte ventas SUNAT
+    static public function mdlReporteVentasSunat($filtros){
+
+        $fechaDesde = $filtros["fechaDesde"];
+        $fechaHasta = $filtros["fechaHasta"];
+
+        $condicionTipoComprobante = "";
+        $condicionEstadoEnvio = " AND V.ENVIO_SUNAT != 0 ";
+
+        if($filtros["tipoComprobante"] != "0"){
+
+            $condicionTipoComprobante = " AND V.TIPO_COMPROBANTE_SUNAT = ".$filtros["tipoComprobante"]." ";
+
+        }
+
+        if($filtros["estadoEnvio"] != "0"){
+
+            $condicionEstadoEnvio = " AND V.ENVIO_SUNAT = ".$filtros["estadoEnvio"]." ";
+
+        }
+
+        $stmt = Conexion::conectar()->prepare("SELECT V.ID_VENTA,
+                                                        V.FECHA_VENTA,
+                                                        CASE
+                                                            WHEN V.TIPO_COMPROBANTE_SUNAT = '01' THEN 'Factura'
+                                                            WHEN V.TIPO_COMPROBANTE_SUNAT = '03' THEN 'Boleta' 
+                                                        END 'TIPO_COMPROBANTE',
+                                                        V.SERIE_VENTA_SUNAT,
+                                                        V.NRO_VENTA_SUNAT,
+                                                        V.ENVIO_SUNAT,
+                                                        CASE
+                                                            WHEN V.ENVIO_SUNAT = 1 THEN 'Enviado'
+                                                            WHEN V.ENVIO_SUNAT = 2 THEN 'Observado' 
+                                                        END 'ESTADO_ENVIO',
+                                                        V.TOTAL_VENTA
+                                                FROM venta V
+                                                WHERE V.ESTADO_REGISTRO = 1
+                                                $condicionEstadoEnvio
+                                                $condicionTipoComprobante
+                                                AND V.FECHA_VENTA BETWEEN '$fechaDesde' AND '$fechaHasta'
+                                                ORDER BY V.FECHA_VENTA DESC");
+
+        $stmt -> execute();
+
+        return $stmt -> fetchAll();    //Devolvemos todos los registros encontrados
+
+        $stmt = null;
 
     }
 

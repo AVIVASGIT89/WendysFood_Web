@@ -70,6 +70,7 @@
                $_GET["ruta"] == "reporte-pagos" ||
                $_GET["ruta"] == "resumen-ventas" ||
                $_GET["ruta"] == "registro-ventas" ||
+               $_GET["ruta"] == "reporte-ventas-sunat" ||
                $_GET["ruta"] == "usuarios" ||
                $_GET["ruta"] == "notificaciones" ||
                $_GET["ruta"] == "clientes" ||

@@ -30,3 +30,18 @@ if($accion == "productosVenta"){
     echo json_encode($respuesta);
 
 }
+else
+if($accion == "ventasSunat"){
+
+    $filtros = array(
+            "fechaDesde" => $_POST["fechaDesde"],
+            "fechaHasta" => $_POST["fechaHasta"],
+            "tipoComprobante" => $_POST["tipoComprobante"],
+            "estadoEnvio" => $_POST["estadoEnvio"]
+    );
+
+    $respuesta = ControladorVenta::ctrReporteVentasSunat($filtros);
+
+    echo json_encode($respuesta);
+
+}

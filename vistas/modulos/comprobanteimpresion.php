@@ -160,5 +160,6 @@ $letras = $modelonumero->numtoletras(abs($ventaTotal));
 $pdf->Cell(0, 10, 'SON: '.$letras, 0, 0, '');
 /**********  Fin Contenido PDF  ************/
 
-$pdf->Output();
+//Imprimimos el archivo con el nombre de nro. comprobante
+$pdf->Output('I',$nroComprobante.".pdf");
 ?>

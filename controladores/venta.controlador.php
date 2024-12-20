@@ -136,4 +136,14 @@ class ControladorVenta{
 
     }
 
+
+    //Reporte ventas sunat
+    static public function ctrReporteVentasSunat($filtros){
+
+        $respuesta = ModeloVenta::mdlReporteVentasSunat($filtros);
+
+        return $respuesta;
+
+    }
+
 }
