@@ -85,7 +85,7 @@
                 <th>Serie</th>
                 <th>Nro.</th>
                 <th>Total S/.</th>
-                <th>Estavo envio</th>
+                <th>Estado envio</th>
                 <th>Descargar</th>
               </tr>
             </thead>

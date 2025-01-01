@@ -91,17 +91,20 @@ class ModeloComprobanteSunat{
     static public function mdlActualizarVentaSunat($datosVenta){
 
         $stmt = Conexion::conectar()->prepare("UPDATE venta
-                                                SET ENVIO_SUNAT = 1,
+                                                SET ENVIO_SUNAT = :ENVIO_SUNAT,
                                                     ID_CLIENTE = :ID_CLIENTE,
                                                     SERIE_VENTA_SUNAT = :SERIE_VENTA_SUNAT,
                                                     NRO_VENTA_SUNAT = :NRO_VENTA_SUNAT,
-                                                    TIPO_COMPROBANTE_SUNAT = :TIPO_COMPROBANTE_SUNAT
+                                                    TIPO_COMPROBANTE_SUNAT = :TIPO_COMPROBANTE_SUNAT,
+                                                    RESPUESTA_SUNAT = :RESPUESTA_SUNAT
                                                 WHERE ID_VENTA = :ID_VENTA");
 
+        $stmt -> bindParam(":ENVIO_SUNAT", $datosVenta["envioSunat"], PDO::PARAM_STR);
         $stmt -> bindParam(":ID_CLIENTE", $datosVenta["idCliente"], PDO::PARAM_STR);
         $stmt -> bindParam(":SERIE_VENTA_SUNAT", $datosVenta["serieVenta"], PDO::PARAM_STR);
         $stmt -> bindParam(":NRO_VENTA_SUNAT", $datosVenta["numeroVenta"], PDO::PARAM_STR);
         $stmt -> bindParam(":TIPO_COMPROBANTE_SUNAT", $datosVenta["tipoComprobante"], PDO::PARAM_STR);
+        $stmt -> bindParam(":RESPUESTA_SUNAT", $datosVenta["respuestaSunat"], PDO::PARAM_STR);
         $stmt -> bindParam(":ID_VENTA", $datosVenta["idVenta"], PDO::PARAM_STR);
 
         if($stmt->execute()){

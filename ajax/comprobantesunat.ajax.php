@@ -31,13 +31,7 @@ if($accion == "generarComprobante"){
 
     }
 
-    $ventaSunatActualizar = [
-        "idVenta" => $idVenta,
-        "idCliente" => $idCliente,
-        "serieVenta" => $serieComprobante,
-        "numeroVenta" => $numeroComprobante,
-        "tipoComprobante" => $tipoComprobante
-    ];
+    $ventaSunatActualizar = [];
 
     $empresa = [
         "ruc" => $datosSunat["RUC"],
@@ -93,7 +87,6 @@ if($accion == "generarComprobante"){
         
     }
 
-
     $datosVenta = array("empresa" => $empresa,
                         "cliente" => $cliente,
                         "venta" => $venta,
@@ -102,16 +95,46 @@ if($accion == "generarComprobante"){
     //echo json_encode($datosVenta);
 
     $respuestaSunat = ControladorComprobanteSunat::ctrGenerarComprobanteSunat($datosVenta);
-
-    //Verificamos si la respuesta es 0 para actualar la venta
+    
+    //Obtenemos el JSON de respuesta (API SUNAT)
     $respuestaVerificar = json_decode($respuestaSunat, true);
-    $codigoRespuesta = $respuestaVerificar["data"]["respuesta_sunat_codigo"];
 
-    if($codigoRespuesta == "0"){
+    //Si existe la clave "respuesta_sunat_codigo"
+    if (isset($respuestaVerificar["data"]["respuesta_sunat_codigo"])) {
 
-        ControladorComprobanteSunat::ctrActualizarVentaSunat($ventaSunatActualizar);
+        $codigoRespuesta = $respuestaVerificar["data"]["respuesta_sunat_codigo"];
+
+        //Verificamos si la respuesta es 0 para actualar la venta
+        if($codigoRespuesta == "0"){
+
+            $ventaSunatActualizar = [
+                "envioSunat" => "1",
+                "idVenta" => $idVenta,
+                "idCliente" => $idCliente,
+                "serieVenta" => $serieComprobante,
+                "numeroVenta" => $numeroComprobante,
+                "tipoComprobante" => $tipoComprobante,
+                "respuestaSunat" => ""
+            ];
+    
+        }
+        
+    }
+    else{
+    
+        $ventaSunatActualizar = [
+            "envioSunat" => "2",
+            "idVenta" => $idVenta,
+            "idCliente" => $idCliente,
+            "serieVenta" => $serieComprobante,
+            "numeroVenta" => $numeroComprobante,
+            "tipoComprobante" => $tipoComprobante,
+            "respuestaSunat" => $respuestaVerificar["data"]["error"]
+        ];
 
     }
+
+    ControladorComprobanteSunat::ctrActualizarVentaSunat($ventaSunatActualizar);
 
     echo $respuestaSunat;
 

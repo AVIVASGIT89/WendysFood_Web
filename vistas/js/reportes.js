@@ -62,6 +62,11 @@ $("#btnRegistroVentas").click(function(){
                         botonAnular = '';
                         botonSunat = '<a href="vistas/modulos/comprobanteimpresion.php?idVenta='+venta.ID_VENTA+'" target="_blank" class="btn btn-sm btn-success" title="Descargar boleta"><i class="fas fa-file-download"></i></a>';
                     }
+                    else
+                    if(venta.ENVIO_SUNAT == "2"){
+                        botonAnular = '';
+                        botonSunat = '<a href="vistas/modulos/comprobanteimpresion.php?idVenta='+venta.ID_VENTA+'" target="_blank" class="btn btn-sm btn-warning" title="Descargar boleta"><i class="fas fa-file-download"></i></a>';
+                    }
                     
                 }
                 else
