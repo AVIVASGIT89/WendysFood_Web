@@ -723,7 +723,6 @@ $("#btnRegistrarVenta").click(function(){
 
                     //Si el check No esta marcado, Imprime...
                     imprimirOrden(listaProductos, nroMesa, clienteDelivery);
-                    //alert("Si imprime");
                     
                 }
 

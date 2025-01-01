@@ -85,6 +85,12 @@
                           <i class="far fa-circle nav-icon text-info"></i>
                           <p>Registro ventas</p>
                         </a>
+                      </li>
+                      <li class="nav-item">
+                        <a href="reporte-ventas-sunat" class="nav-link">
+                          <i class="far fa-circle nav-icon text-info"></i>
+                          <p>Reporte ventas Sunat</p>
+                        </a>
                       </li>';
               }
               ?>

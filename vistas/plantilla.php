@@ -70,6 +70,7 @@
                $_GET["ruta"] == "reporte-pagos" ||
                $_GET["ruta"] == "resumen-ventas" ||
                $_GET["ruta"] == "registro-ventas" ||
+               $_GET["ruta"] == "reporte-ventas-sunat" ||
                $_GET["ruta"] == "usuarios" ||
                $_GET["ruta"] == "notificaciones" ||
                $_GET["ruta"] == "clientes" ||
@@ -114,6 +115,7 @@
 <script src="vistas/js/pago.js?v=<?php echo(rand()); ?>"></script>
 <script src="vistas/js/reportes.js?v=<?php echo(rand()); ?>"></script>
 <script src="vistas/js/notificaciones.js?v=<?php echo(rand()); ?>"></script>
+<script src="vistas/js/comprobantesunat.js?v=<?php echo(rand()); ?>"></script>
 
 </body>
 </html>
