@@ -199,6 +199,7 @@ function calcularSubtotalPrecioManual(e){
     tr.find("input[name='f_baseSubtotal']").val(baseSubtotal);
 	var igvSubtotal = parseFloat(subtotal - baseSubtotal).toFixed(2);
     tr.find("input[name='f_igvSubtotal']").val(igvSubtotal);
+    tr.find("td").eq(3).text(subtotal);
 	
 	calcularTotal();
     
