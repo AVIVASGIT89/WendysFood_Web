@@ -634,7 +634,7 @@ class ModeloVenta{
                                                 WHERE V.ESTADO_REGISTRO = 1
                                                 $condicionEstadoEnvio
                                                 $condicionTipoComprobante
-                                                AND V.FECHA_VENTA BETWEEN '$fechaDesde' AND '$fechaHasta'
+                                                AND V.FECHA_VENTA BETWEEN '$fechaDesde 00:00:00' AND '$fechaHasta 23:59:59'
                                                 ORDER BY V.FECHA_VENTA DESC");
 
         $stmt -> execute();
