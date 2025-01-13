@@ -317,3 +317,236 @@ $("#btnRegistrarComprobante").click(function(){
     });
     
 });
+
+
+//Mostrar respuesta Sunat para envios observados o con error
+$(document).on("click", ".btnMensajeSunat", function(){
+
+    var idVenta = $(this).attr("idventa");
+
+    var datos = new FormData();
+    datos.append("accion", "mostrarRespuestaSunat");
+    datos.append("idVenta", idVenta);
+
+
+    $.ajax({
+        url: "ajax/venta.ajax.php",
+        method: "POST",
+        data: datos,
+        cache: false,
+        contentType: false,
+        processData: false,
+        dataType: "json",
+        success: function(respuesta){
+
+            console.log("respuesta:", respuesta);
+
+            $("#spRespuestaSunat").text(respuesta.RESPUESTA_SUNAT);
+
+            //Mostramos modal "modalRegistrarOrden"
+            $("#modal-respuesta-sunat").modal('show');
+
+        }
+
+    });
+    
+});
+
+
+//inicio para reenviar comprobante a Sunat
+$(document).on("click", ".btnDatosReenvioSunat", function(){
+
+    var idVenta = $(this).attr("idventa");
+
+    var datos = new FormData();
+    datos.append("accion", "mostrarDatosComprobante");
+    datos.append("idVenta", idVenta);
+
+    $.ajax({
+        url: "ajax/comprobantesunat.ajax.php",
+        method: "POST",
+        data: datos,
+        cache: false,
+        contentType: false,
+        processData: false,
+        dataType: "json",
+        success: function(respuesta){
+
+            //console.log("respuesta:", respuesta);
+
+            var i = 0;
+            var totalMontoVenta = 0;
+            var totalBase = 0;
+            var totalIGV = 0;
+
+            var fechaVenta;
+            var serieVenta;
+            var nroVenta;
+            var tipoComprobante;
+            
+            var tbody = $("#tbodyProductosVentaComprobante");
+			tbody.empty();
+
+            respuesta.productos.forEach(function(producto){
+
+                i++;
+                totalMontoVenta += parseFloat(producto.SUBTOTAL);
+                totalBase += parseFloat(producto.SUBTOTAL_BASE);
+                totalIGV += parseFloat(producto.SUBTOTAL_IGV);
+
+                fechaVenta = producto.FECHA_VENTA;
+                serieVenta = producto.SERIE_VENTA_SUNAT;
+                nroVenta = producto.NRO_VENTA_SUNAT;
+                tipoComprobante = producto.TIPO_COMPROBANTE_SUNAT;
+
+				tbody.append( 
+					'<tr>'+
+					  '<td>'+i+'</td>'+
+					  '<td align="center">'+producto.CANTIDAD+'</td>'+
+					  '<td>'+producto.NOMBRE_PRODUCTO+'</td>'+
+                      '<td align="right">'+producto.PRECIO_UNITARIO+'</td>'+
+					  '<td align="right">'+producto.SUBTOTAL+
+                        '<input type="hidden" name="subtotalBase" value="'+producto.SUBTOTAL_BASE+'"/>'+
+					    '<input type="hidden" name="subtotalIGV" value="'+producto.SUBTOTAL_IGV+'"/>'+
+                      '</td>'+
+					'</tr>'
+				);
+
+			});
+
+            var tamanioIdentificacion = respuesta.cliente.IDENTIFICACION_CLIENTE.length;
+
+            $("#tipoDocumento").val(tipoComprobante);
+
+            if(tamanioIdentificacion == 8){
+                $("#fTipoIdentificacionCliente").val("1");
+            }else if(tamanioIdentificacion == 11){
+                $("#fTipoIdentificacionCliente").val("6");
+            }else{
+                $("#fTipoIdentificacionCliente").val("");
+            }
+
+            $("#spSerieVentaSunat").text(serieVenta);
+            $("#spNroVentaSunat").text(nroVenta);
+
+            $("#fIdCliente").val(respuesta.cliente.ID_CLIENTE);
+            $("#clienteNombre").val(respuesta.cliente.NOMBRE_CLIENTE);
+            $("#identificacionCliente").val(respuesta.cliente.IDENTIFICACION_CLIENTE);
+            $("#fIdentificacionCliente").val(respuesta.cliente.IDENTIFICACION_CLIENTE);
+
+            $("#fechaVenta").val(fechaVenta);
+            $("#fIdVenta").val(idVenta);
+            $("#fVentaBase").val(totalBase.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}));
+            $("#fVentaIGV").val(totalIGV.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}));
+            $("#spTotalVentaComprobante").text(totalMontoVenta.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2}));
+
+            $("#modalGenerarComprobante").modal('show');
+
+        }
+
+    });
+    
+});
+
+
+//Reenviar comprobante observado a sunat
+$("#btnReenviarComprobante").click(function(){
+
+    var fecha = $("#fechaVenta").val();
+
+    //Capturamos datos del cliente
+    var nombreCliente = $("#clienteNombre").val();
+    var fIdentificacionCliente = $("#fIdentificacionCliente").val();
+    var tipoIdentificacionCliente = $("#fTipoIdentificacionCliente").val();
+    var direccionCliente = "-";
+
+    //Capturamos datos de la venta
+    var tipoDocumento = $("#tipoDocumento").val();
+    var serieVentaSunat = $("#spSerieVentaSunat").text();
+    var nroComprobante = $("#spNroVentaSunat").text();
+    var idCliente = $("#fIdCliente").val();
+    var idVenta = $("#fIdVenta").val();
+    var fechaVenta = fecha.substring(0, 10);
+    var horaActual = fecha.substring(11, 19)
+    var ventaBase = $("#fVentaBase").val();
+    var ventaIGV = $("#fVentaIGV").val();
+
+    //Obtenemos la lista de productos (detalle)
+    var listaProductos = [];
+    
+    $("#tbodyProductosVentaComprobante tr").each(function(){
+
+        var nombreProducto = $(this).find("td").eq(2).text();
+        var baseSubtotal = $(this).find("input[name='subtotalBase']").val();
+
+        listaProductos.push(
+            {
+				'nombreProducto': nombreProducto,
+                'baseSubtotal': baseSubtotal
+            }
+        );
+
+    });
+    
+
+    //Definimos toddos los datos del comprobante
+    var datosComprobante = {
+        "accion": "reenviarComprobante",
+
+        "nombreCliente": nombreCliente,
+        "identificacionCliente": fIdentificacionCliente,
+        "tipoIdentificacionCliente": tipoIdentificacionCliente,
+        "direccionCliente": direccionCliente,
+
+        "idVenta": idVenta,
+        "serieVentaSunat": serieVentaSunat,
+        "nroComprobante": nroComprobante,
+        "idCliente": idCliente,
+        "tipoDocumento": tipoDocumento,
+        "fechaVenta": fechaVenta,
+        "horaVenta": horaActual,
+        "ventaBase": ventaBase,
+        "ventaIGV": ventaIGV,
+
+        "listaProductos": listaProductos
+    };    
+
+    //Generacion de comprobante
+    $.ajax({
+        url: "ajax/comprobantesunat.ajax.php",
+        method: "POST",
+        data: datosComprobante,
+        dataType: "json",
+        success: function(respuesta){
+
+            //console.log("respuesta:", respuesta); return;
+
+            if(respuesta.data.respuesta_sunat_codigo == "0"){
+
+                Swal.fire({
+                    title: "Comprobante generado correctamente",
+                    icon: "success",
+                    allowOutsideClick: false,
+                    confirmButtonText: "Ok"
+                }).then((result) => {
+
+                    if (result.isConfirmed) {
+                        
+                        window.open('vistas/modulos/comprobanteimpresion.php?idVenta='+idVenta, '_blank');
+                        window.location = "reporte-ventas-sunat";
+
+                    }
+                    
+                });
+
+            }else{
+
+                alert("Error al generar comprobante");
+
+            }
+
+        }
+
+    });
+    
+});

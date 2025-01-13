@@ -210,7 +210,7 @@
         </div>
         <div class="modal-footer justify-content-between">
           <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-          <button type="button" class="btn btn-success" id="btnRegistrarComprobante"><i class="fas fa-money-bill-alt"></i> Generar Comprobante</button>
+          <button type="button" class="btn btn-success" id="btnRegistrarComprobante"><i class="fas fa-paper-plane"></i> Enviar Comprobante</button>
         </div>
       </div>
       <!-- /.modal-content -->

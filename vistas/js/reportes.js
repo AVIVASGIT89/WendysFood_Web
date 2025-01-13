@@ -173,7 +173,7 @@ $("#btnReporteVentasSunat").click(function(){
                 }else if(ventaSunat.ENVIO_SUNAT == "2"){
 
                     estadoEnvio = '<span class="badge badge-warning">Observado</span>';
-                    botonDescargar = '<a href="vistas/modulos/comprobanteimpresion.php?idVenta='+ventaSunat.ID_VENTA+'" target="_blank" class="btn btn-sm btn-warning" title="Descargar boleta"><i class="fas fa-file-download"></i></a>';
+                    botonDescargar = '<button class="btn btn-sm btn-danger btnMensajeSunat" idventa="'+ventaSunat.ID_VENTA+'"><i class="fas fa-comment"></i></button> <button class="btn btn-sm btn-primary btnDatosReenvioSunat" idventa="'+ventaSunat.ID_VENTA+'"><i class="fas fa-share"></i></button> <a href="vistas/modulos/comprobanteimpresion.php?idVenta='+ventaSunat.ID_VENTA+'" target="_blank" class="btn btn-sm btn-warning" title="Descargar boleta"><i class="fas fa-file-download"></i></a>';
 
                 }else{
 
