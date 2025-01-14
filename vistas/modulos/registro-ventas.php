@@ -180,7 +180,7 @@
             </div>
             <div class="form-group">
               <label for="fechaVenta">Fecha de Factura</label>
-              <input type="text" class="form-control" id="fechaVenta" value="" disabled>
+              <input type="datetime-local" class="form-control" id="fechaVenta" value="">
             </div>
             <h5 class="mt-4">Productos</h5>
             <table class="table table-sm table-striped table-hover">

@@ -19,8 +19,12 @@ if($accion == "generarComprobante"){
     $idVenta = $_POST["idVenta"];
     $idCliente = $_POST["idCliente"];
     $tipoComprobante = $_POST["tipoDocumento"];
+    
     $serieComprobante;
     $numeroComprobante;
+
+    $fechaHoraVenta = $_POST["fechaVenta"]." ".$_POST["horaVenta"];
+
     $items = [];
 
     if($tipoComprobante == "01"){
@@ -116,6 +120,7 @@ if($accion == "generarComprobante"){
             $ventaSunatActualizar = [
                 "envioSunat" => "1",
                 "idVenta" => $idVenta,
+                "fechaVenta" => $fechaHoraVenta,
                 "idCliente" => $idCliente,
                 "serieVenta" => $serieComprobante,
                 "numeroVenta" => $numeroComprobante,
@@ -131,6 +136,7 @@ if($accion == "generarComprobante"){
         $ventaSunatActualizar = [
             "envioSunat" => "2",
             "idVenta" => $idVenta,
+            "fechaVenta" => $fechaHoraVenta,
             "idCliente" => $idCliente,
             "serieVenta" => $serieComprobante,
             "numeroVenta" => $numeroComprobante,
@@ -179,8 +185,10 @@ if($accion == "reenviarComprobante"){
     $tipoComprobante = $_POST["tipoDocumento"];
     $serieComprobante = $_POST["serieVentaSunat"];
     $numeroComprobante = $_POST["nroComprobante"];
-    $items = [];
 
+    $fechaHoraVenta = $_POST["fechaVenta"]." ".$_POST["horaVenta"];
+
+    $items = [];
     $ventaSunatActualizar = [];
 
     $empresa = [
@@ -260,6 +268,7 @@ if($accion == "reenviarComprobante"){
             $ventaSunatActualizar = [
                 "envioSunat" => "1",
                 "idVenta" => $idVenta,
+                "fechaVenta" => $fechaHoraVenta,
                 "idCliente" => $idCliente,
                 "serieVenta" => $serieComprobante,
                 "numeroVenta" => $numeroComprobante,
@@ -275,6 +284,7 @@ if($accion == "reenviarComprobante"){
         $ventaSunatActualizar = [
             "envioSunat" => "2",
             "idVenta" => $idVenta,
+            "fechaVenta" => $fechaHoraVenta,
             "idCliente" => $idCliente,
             "serieVenta" => $serieComprobante,
             "numeroVenta" => $numeroComprobante,
