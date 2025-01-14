@@ -146,4 +146,14 @@ class ControladorVenta{
 
     }
 
+
+    //Mostrar respuesta Sunat para envios observados o con error
+    static public function ctrMostrarRespuestaSunat($idVenta){
+
+        $respuesta = ModeloVenta::mdlMostrarRespuestaSunat($idVenta);
+
+        return $respuesta;
+
+    }
+
 }

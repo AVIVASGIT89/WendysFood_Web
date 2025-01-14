@@ -406,6 +406,10 @@ class ModeloVenta{
     static public function mdlProductosVenta($idVenta){
 
         $stmt = Conexion::conectar()->prepare("SELECT V.FECHA_VENTA, 
+                                                        V.ID_CLIENTE,
+                                                        V.SERIE_VENTA_SUNAT,
+                                                        V.NRO_VENTA_SUNAT,
+                                                        V.TIPO_COMPROBANTE_SUNAT,
                                                         P.NOMBRE_PRODUCTO,
                                                         D.CANTIDAD,
                                                         D.PRECIO_UNITARIO,
@@ -640,6 +644,22 @@ class ModeloVenta{
         $stmt -> execute();
 
         return $stmt -> fetchAll();    //Devolvemos todos los registros encontrados
+
+        $stmt = null;
+
+    }
+
+
+    //Mostrar respuesta Sunat para envios observados o con error
+    static public function mdlMostrarRespuestaSunat($idVenta){
+
+        $stmt = Conexion::conectar()->prepare("SELECT V.RESPUESTA_SUNAT
+                                                    FROM venta V
+                                                    WHERE V.ID_VENTA = $idVenta");
+
+        $stmt -> execute();
+
+        return $stmt -> fetch();    //Devolvemos el resultado encontrado
 
         $stmt = null;
 

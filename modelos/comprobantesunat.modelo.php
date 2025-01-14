@@ -93,6 +93,7 @@ class ModeloComprobanteSunat{
         $stmt = Conexion::conectar()->prepare("UPDATE venta
                                                 SET ENVIO_SUNAT = :ENVIO_SUNAT,
                                                     ID_CLIENTE = :ID_CLIENTE,
+                                                    FECHA_VENTA = :FECHA_VENTA,
                                                     SERIE_VENTA_SUNAT = :SERIE_VENTA_SUNAT,
                                                     NRO_VENTA_SUNAT = :NRO_VENTA_SUNAT,
                                                     TIPO_COMPROBANTE_SUNAT = :TIPO_COMPROBANTE_SUNAT,
@@ -101,6 +102,7 @@ class ModeloComprobanteSunat{
 
         $stmt -> bindParam(":ENVIO_SUNAT", $datosVenta["envioSunat"], PDO::PARAM_STR);
         $stmt -> bindParam(":ID_CLIENTE", $datosVenta["idCliente"], PDO::PARAM_STR);
+        $stmt -> bindParam(":FECHA_VENTA", $datosVenta["fechaVenta"], PDO::PARAM_STR);
         $stmt -> bindParam(":SERIE_VENTA_SUNAT", $datosVenta["serieVenta"], PDO::PARAM_STR);
         $stmt -> bindParam(":NRO_VENTA_SUNAT", $datosVenta["numeroVenta"], PDO::PARAM_STR);
         $stmt -> bindParam(":TIPO_COMPROBANTE_SUNAT", $datosVenta["tipoComprobante"], PDO::PARAM_STR);

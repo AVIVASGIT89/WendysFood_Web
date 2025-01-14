@@ -197,3 +197,13 @@ if($accion == "enviarMailAnulacionOrden"){
     echo json_encode($respuesta);
     
 }
+else
+if($accion == "mostrarRespuestaSunat"){
+
+    $idVenta = $_POST["idVenta"];
+
+    $respuesta = ControladorVenta::ctrMostrarRespuestaSunat($idVenta);
+
+    echo json_encode($respuesta);
+
+}

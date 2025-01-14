@@ -102,3 +102,105 @@
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
+
+
+  <!----------------------- Modales ----------------------->
+
+  <!-- Modal mostrar respuesta Sunat -->
+  <div class="modal fade" id="modal-respuesta-sunat">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Respuesta SUNAT</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p><span id="spRespuestaSunat"></span></p>
+        </div>
+        <div class="modal-footer justify-content-between">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+        </div>
+      </div>
+      <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+  </div>
+
+
+  <!-- Modal Reenviar Comprobante a Sunat-->
+  <div class="modal fade" id="modalGenerarComprobante">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Reenviar venta: <span id="spSerieVentaSunat"></span>-<span id="spNroVentaSunat"></span></h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form id="facturaForm">
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                <label for="tipoDocumento">Tipo de Documento</label>
+                <select class="form-control" id="tipoDocumento" disabled>
+                    <option value="">-Seleccione-</option>
+                    <option value="03">Boleta</option>
+                    <option value="01">Factura</option>
+                </select>
+              </div>
+              <div class="form-group col-md-6">
+                <label for="identificacionCliente">Identificacion</label> <span id="spFuenteIdentificacion" style="font-size: 10px;"></span>
+                <div class="input-group">
+                  <input type="text" class="form-control" id="identificacionCliente" disabled>
+                  <div class="input-group-append">
+                      <button class="btn btn-primary" type="button" id="btnBuscarClienteIdentificacion" disabled>Buscar</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="clienteNombre">Nombre del Cliente</label>
+              <input type="text" class="form-control" id="clienteNombre" disabled>
+            </div>
+            <div class="form-group">
+              <label for="fechaVenta">Fecha de Factura</label>
+              <input type="text" class="form-control" id="fechaVenta" value="" disabled>
+            </div>
+            <h5 class="mt-4">Productos</h5>
+            <table class="table table-sm table-striped table-hover">
+              <thead>
+                <th>#</th>
+                <th>Cantidad</th>
+                <th>Producto</th>
+                <th>Precio</th>
+                <th>Subtotal</th>
+              </thead>
+              <tbody id="tbodyProductosVentaComprobante">
+                <!-- Aqui se agregaran los productos -->
+              </tbody>
+
+              <tfoot>
+                <td colspan="4" align="right"><b>Total</b></td>
+                <td align="right"><b><span id="spTotalVentaComprobante">0</span></b></td>
+              </tfoot>
+            </table>
+            <input type="hidden" id="fIdVenta" value="">
+            <input type="hidden" id="fVentaBase" value="">
+            <input type="hidden" id="fVentaIGV" value="">
+            <input type="hidden" id="fIdentificacionCliente" value="">
+            <input type="hidden" id="fTipoIdentificacionCliente" value="">
+            <input type="hidden" id="fIdCliente" value="">
+          </form>
+        </div>
+        <div class="modal-footer justify-content-between">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+          <button type="button" class="btn btn-success" id="btnReenviarComprobante"><i class="fas fa-paper-plane"></i> Reenviar</button>
+        </div>
+      </div>
+      <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+  </div>
+

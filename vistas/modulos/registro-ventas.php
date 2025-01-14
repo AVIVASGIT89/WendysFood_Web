@@ -180,7 +180,7 @@
             </div>
             <div class="form-group">
               <label for="fechaVenta">Fecha de Factura</label>
-              <input type="text" class="form-control" id="fechaVenta" value="" disabled>
+              <input type="datetime-local" class="form-control" id="fechaVenta" value="">
             </div>
             <h5 class="mt-4">Productos</h5>
             <table class="table table-sm table-striped table-hover">
@@ -210,7 +210,7 @@
         </div>
         <div class="modal-footer justify-content-between">
           <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-          <button type="button" class="btn btn-success" id="btnRegistrarComprobante"><i class="fas fa-money-bill-alt"></i> Generar Comprobante</button>
+          <button type="button" class="btn btn-success" id="btnRegistrarComprobante"><i class="fas fa-paper-plane"></i> Enviar Comprobante</button>
         </div>
       </div>
       <!-- /.modal-content -->
