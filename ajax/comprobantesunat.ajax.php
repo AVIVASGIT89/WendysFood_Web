@@ -102,7 +102,7 @@ if($accion == "generarComprobante"){
                         "venta" => $venta,
                         "items" => $items);
 
-    //echo json_encode($datosVenta);
+    //echo json_encode($datosVenta); die();
 
     $respuestaSunat = ControladorComprobanteSunat::ctrGenerarComprobanteSunat($datosVenta);
     

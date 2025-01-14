@@ -308,7 +308,7 @@ $("#btnRegistrarComprobante").click(function(){
 
             }else{
 
-                alert("Error al generar comprobante");
+                alert("Error:\n\n" + respuesta.data.error);
 
             }
 
@@ -541,7 +541,7 @@ $("#btnReenviarComprobante").click(function(){
 
             }else{
 
-                alert("Error al generar comprobante");
+                alert("Error:\n\n" + respuesta.data.error);
 
             }
 
