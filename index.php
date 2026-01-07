@@ -1,4 +1,7 @@
 <?php
+
+date_default_timezone_set('America/Lima');
+
 //Controladores
 require_once "controladores/plantilla.controlador.php";
 require_once "controladores/usuario.controlador.php";
