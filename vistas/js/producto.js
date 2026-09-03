@@ -97,8 +97,6 @@ $(document).on("click", ".editarProducto", function(){
 //Actualizar producto
 $("#btnEditarProducto").click(function(){
 
-    //alert("llega"); return;
-
     var idProducto = $("#idProducto").val();
     var editarCodigo = $("#editarCodigo").val();
     var editarProducto = $("#editarProducto").val();

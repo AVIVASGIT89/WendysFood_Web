@@ -2,7 +2,7 @@
 -- Host:                         127.0.0.1
 -- Versión del servidor:         10.4.32-MariaDB - mariadb.org binary distribution
 -- SO del servidor:              Win64
--- HeidiSQL Versión:             12.8.0.6908
+-- HeidiSQL Versión:             12.21.0.7344
 -- --------------------------------------------------------
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -55,7 +55,7 @@ CREATE TABLE IF NOT EXISTS `configuracion_sunat` (
   PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Volcando datos para la tabla wendysfood.configuracion_sunat: ~1 rows (aproximadamente)
+-- Volcando datos para la tabla wendysfood.configuracion_sunat: ~0 rows (aproximadamente)
 INSERT INTO `configuracion_sunat` (`ID`, `RUC`, `RAZON_SOCIAL`, `NOMBRE_COMERCIAL`, `SERIE_ACTUAL_BOLETA`, `SERIE_ACTUAL_FACTURA`, `DOMICILIO_FISCAL`, `UBIGEO`, `USUARIO_SECUNDARIO_SUNAT`, `CLAVE_USUARIO_SECUNDARIO`, `AMBIENTE`, `ESTADO_REGISTRO`) VALUES
 	(1, '10458273711', 'ROSENDO ALEXANDER VIVAS QUISPE', 'WENDYS FOOD', 'B001', 'F001', '-', '040101', 'MODDATOS', 'MODDATOS', 0, 1);
 
@@ -91,7 +91,7 @@ CREATE TABLE IF NOT EXISTS `mesa` (
 -- Volcando datos para la tabla wendysfood.mesa: ~11 rows (aproximadamente)
 INSERT INTO `mesa` (`ID_MESA`, `NRO_MESA`, `TOTAL_CONSUMO`, `ESTADO_MESA`, `ID_VENTA_OCUPACION`, `ULTIMA_OCUPACION`, `USUARIO_ULT_OCUPACION`, `VISIBLE`, `ESTADO_REGISTRO`) VALUES
 	(1, 0, 0.00, 1, NULL, NULL, NULL, 0, 1),
-	(2, 1, 0.00, 1, NULL, '2024-12-16 14:39:08', NULL, 1, 1),
+	(2, 1, 0.00, 1, NULL, '2026-08-30 23:59:31', NULL, 1, 1),
 	(3, 2, 0.00, 1, NULL, '2024-12-19 13:12:34', NULL, 1, 1),
 	(4, 3, 0.00, 1, NULL, '2024-12-19 13:28:47', NULL, 1, 1),
 	(5, 4, 0.00, 1, NULL, '2024-12-03 11:28:26', NULL, 1, 1),
@@ -762,6 +762,22 @@ INSERT INTO `producto` (`ID_PRODUCTO`, `CODIGO_PRODUCTO`, `NOMBRE_PRODUCTO`, `TI
 	(80, '7751655000657', 'Gatorade Tropical', 1, 3.50, 1, 'admin', '2024-07-05 01:52:33', 1),
 	(81, '4588', 'Producto prueba', 1, 3.50, 1, 'admin', '2024-12-03 11:45:42', 1);
 
+-- Volcando estructura para tabla wendysfood.promociones
+CREATE TABLE IF NOT EXISTS `promociones` (
+  `ID_PROMOCION` int(11) NOT NULL AUTO_INCREMENT,
+  `NOMBRE_PROMOCION` varchar(255) NOT NULL,
+  `DESCRIPCION_PROMOCION` text DEFAULT NULL,
+  `URL_IMAGEN` varchar(512) NOT NULL,
+  `ESTADO_REGISTRO` int(11) NOT NULL DEFAULT 1,
+  PRIMARY KEY (`ID_PROMOCION`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Volcando datos para la tabla wendysfood.promociones: ~3 rows (aproximadamente)
+INSERT INTO `promociones` (`ID_PROMOCION`, `NOMBRE_PROMOCION`, `DESCRIPCION_PROMOCION`, `URL_IMAGEN`, `ESTADO_REGISTRO`) VALUES
+	(1, 'Menu chaufa', 'Menu chaufa a S/. 12.00', 'https://avivasimages.download/images/promociones/menu_chaufa.jpeg', 1),
+	(2, 'Caldo con presa', 'Caldo con presa a S/. 9.00', 'https://avivasimages.download/images/promociones/caldo_presa.jpeg', 0),
+	(4, 'mas', 'msd|', 'mas', 1);
+
 -- Volcando estructura para tabla wendysfood.secuencias
 CREATE TABLE IF NOT EXISTS `secuencias` (
   `ID_SECUENCIA` int(11) NOT NULL AUTO_INCREMENT,
@@ -791,7 +807,7 @@ CREATE TABLE IF NOT EXISTS `usuario` (
   CONSTRAINT `FK_usuario_rol_usuario` FOREIGN KEY (`ROL_USUARIO`) REFERENCES `usuario_rol` (`ID_ROL`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Volcando datos para la tabla wendysfood.usuario: ~1 rows (aproximadamente)
+-- Volcando datos para la tabla wendysfood.usuario: ~0 rows (aproximadamente)
 INSERT INTO `usuario` (`ID_USUARIO`, `USUARIO`, `CLAVE`, `NOMBRE_USUARIO`, `APELLIDO_USUARIO`, `ROL_USUARIO`, `FECHA_REGISTRO`, `ESTADO_REGISTRO`) VALUES
 	(1, 'admin', 'admin24', 'Administrador', '', 1, '2024-05-19 17:29:04', 1);
 
@@ -837,9 +853,9 @@ CREATE TABLE IF NOT EXISTS `venta` (
   KEY `FK_venta_usuario` (`ID_USUARIO_VENTA`),
   CONSTRAINT `FK_venta_mesa` FOREIGN KEY (`ID_MESA`) REFERENCES `mesa` (`ID_MESA`),
   CONSTRAINT `FK_venta_usuario` FOREIGN KEY (`ID_USUARIO_VENTA`) REFERENCES `usuario` (`ID_USUARIO`)
-) ENGINE=InnoDB AUTO_INCREMENT=2008 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2009 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Volcando datos para la tabla wendysfood.venta: ~1,980 rows (aproximadamente)
+-- Volcando datos para la tabla wendysfood.venta: ~1,986 rows (aproximadamente)
 INSERT INTO `venta` (`ID_VENTA`, `TIPO_VENTA`, `ID_USUARIO_VENTA`, `ID_MESA`, `ID_CLIENTE`, `NRO_PRODUCTOS`, `ID_FORMA_PAGO`, `USUARIO_VENTA`, `FECHA_VENTA`, `BASE_VENTA`, `IGV_VENTA`, `TOTAL_VENTA`, `ESTADO_VENTA`, `FECHA_CANCELACION`, `USUARIO_CANCELACION`, `CLIENTE_DELIVERY`, `SERIE_VENTA_SUNAT`, `NRO_VENTA_SUNAT`, `TIPO_COMPROBANTE_SUNAT`, `ENVIO_SUNAT`, `RESPUESTA_SUNAT`, `ESTADO_REGISTRO`) VALUES
 	(22, 1, 1, 4, NULL, 1, 1, 'admin', '2024-05-22 22:52:08', 10.17, 1.83, 12.00, 2, NULL, NULL, '', 'B001', 1, NULL, 0, NULL, 1),
 	(23, 2, 1, 1, NULL, 1, 1, 'admin', '2024-05-22 23:15:01', 5.93, 1.07, 7.00, 2, NULL, NULL, 'Sonia', NULL, NULL, NULL, 0, NULL, 1),
@@ -2826,7 +2842,8 @@ INSERT INTO `venta` (`ID_VENTA`, `TIPO_VENTA`, `ID_USUARIO_VENTA`, `ID_MESA`, `I
 	(2004, 1, 1, 6, 2, 2, 1, 'admin', '2024-12-19 13:12:43', 25.42, 4.58, 30.00, 2, NULL, NULL, '', 'F001', 19, '01', 1, NULL, 1),
 	(2005, 1, 1, 9, 3, 3, 1, 'admin', '2024-12-19 13:12:56', 64.41, 11.59, 76.00, 2, NULL, NULL, '', 'B001', 64, '03', 0, NULL, 1),
 	(2006, 2, 1, 1, NULL, 1, 1, 'admin', '2024-12-19 13:13:57', 5.93, 1.07, 7.00, 2, NULL, NULL, 'Cliente Delivery', NULL, NULL, NULL, 0, NULL, 1),
-	(2007, 1, 1, 4, NULL, 2, 1, 'admin', '2024-12-19 13:28:47', 14.41, 2.59, 17.00, 2, NULL, NULL, '', NULL, NULL, NULL, 0, NULL, 1);
+	(2007, 1, 1, 4, NULL, 2, 1, 'admin', '2024-12-19 13:28:47', 14.41, 2.59, 17.00, 2, NULL, NULL, '', NULL, NULL, NULL, 0, NULL, 1),
+	(2008, 1, 1, 2, NULL, 1, 1, 'admin', '2026-08-30 23:59:31', 29.66, 5.34, 35.00, 2, NULL, NULL, '', NULL, NULL, NULL, 0, NULL, 1);
 
 -- Volcando estructura para tabla wendysfood.venta_detalle
 CREATE TABLE IF NOT EXISTS `venta_detalle` (
@@ -2844,9 +2861,9 @@ CREATE TABLE IF NOT EXISTS `venta_detalle` (
   KEY `FK_venta_detalle_producto` (`ID_PRODUCTO`),
   CONSTRAINT `FK_venta_detalle_producto` FOREIGN KEY (`ID_PRODUCTO`) REFERENCES `producto` (`ID_PRODUCTO`),
   CONSTRAINT `FK_venta_detalle_venta` FOREIGN KEY (`ID_VENTA`) REFERENCES `venta` (`ID_VENTA`)
-) ENGINE=InnoDB AUTO_INCREMENT=3898 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3899 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Volcando datos para la tabla wendysfood.venta_detalle: ~3,865 rows (aproximadamente)
+-- Volcando datos para la tabla wendysfood.venta_detalle: ~3,877 rows (aproximadamente)
 INSERT INTO `venta_detalle` (`ID_DETALLE_VENTA`, `ID_VENTA`, `ID_PRODUCTO`, `PRECIO_UNITARIO`, `CANTIDAD`, `SUBTOTAL_BASE`, `SUBTOTAL_IGV`, `SUBTOTAL`, `ESTADO_REGISTRO`) VALUES
 	(1, 22, 12, 12.00, 1, 10.17, 1.83, 12.00, 1),
 	(2, 23, 5, 7.00, 1, 5.93, 1.07, 7.00, 1),
@@ -6744,7 +6761,8 @@ INSERT INTO `venta_detalle` (`ID_DETALLE_VENTA`, `ID_VENTA`, `ID_PRODUCTO`, `PRE
 	(3894, 2005, 2, 7.00, 5, 29.66, 5.34, 35.00, 1),
 	(3895, 2006, 5, 7.00, 1, 5.93, 1.07, 7.00, 1),
 	(3896, 2007, 5, 7.00, 1, 5.93, 1.07, 7.00, 1),
-	(3897, 2007, 3, 10.00, 1, 8.47, 1.53, 10.00, 1);
+	(3897, 2007, 3, 10.00, 1, 8.47, 1.53, 10.00, 1),
+	(3898, 2008, 1, 35.00, 1, 29.66, 5.34, 35.00, 1);
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
