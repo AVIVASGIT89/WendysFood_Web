@@ -74,6 +74,7 @@
                $_GET["ruta"] == "usuarios" ||
                $_GET["ruta"] == "notificaciones" ||
                $_GET["ruta"] == "clientes" ||
+               $_GET["ruta"] == "promociones" ||
                $_GET["ruta"] == "salir"){
 
                 include "modulos/".$_GET["ruta"].".php";
@@ -113,6 +114,7 @@
 <script src="vistas/js/usuario.js?v=<?php echo(rand()); ?>"></script>
 <script src="vistas/js/venta.js?v=<?php echo(rand()); ?>"></script>
 <script src="vistas/js/pago.js?v=<?php echo(rand()); ?>"></script>
+<script src="vistas/js/promociones.js?v=<?php echo(rand()); ?>"></script>
 <script src="vistas/js/reportes.js?v=<?php echo(rand()); ?>"></script>
 <script src="vistas/js/notificaciones.js?v=<?php echo(rand()); ?>"></script>
 <script src="vistas/js/comprobantesunat.js?v=<?php echo(rand()); ?>"></script>

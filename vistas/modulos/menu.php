@@ -59,6 +59,14 @@
                         Usuarios
                       </p>
                     </a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="promociones" class="nav-link">
+                      <i class="nav-icon fa fa-gift"></i>
+                      <p>
+                        Promociones
+                      </p>
+                    </a>
                   </li>';
           }
           ?>
