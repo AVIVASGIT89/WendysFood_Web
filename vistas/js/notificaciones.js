@@ -164,6 +164,15 @@ $(".procesarClientes").click(function(){
         $("#spTipo").addClass("badge badge-info");
 
     }
+    else
+    if(tipoNotificacion == "3"){
+
+        URL = ambienteEjecucion + "/apiwendysfood/notificaciones/conteoClientesCeroPuntos/?fechaDesde="+fechaDesde+"&fechaHasta="+fechaHasta;
+        textoTipo = "Cero Puntos";
+        $("#spTipo").removeClass("badge badge-warning");
+        $("#spTipo").addClass("badge badge-primary");
+
+    }
 
     //Efecto "Procesando..."
     $("#btnProcesar").prop("disabled", true);
@@ -222,6 +231,12 @@ $(".enviarNotificacion").click(function(){
     if(tipoNotificacion == "2"){
 
         URL = ambienteEjecucion + "/apiwendysfood/notificaciones/enviarNotificacionMayor100Puntos";
+
+    }
+    else
+    if(tipoNotificacion == "3"){
+
+        URL = ambienteEjecucion + "/apiwendysfood/notificaciones/enviarNotificacionCeroPuntos";
 
     }
 

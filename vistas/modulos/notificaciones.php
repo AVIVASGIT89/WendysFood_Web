@@ -78,6 +78,7 @@
                     <option value="">- Seleccione -</option>
                     <option value="1">Menor 100 puntos</option>
                     <option value="2">Mayor 100 puntos</option>
+                    <option value="3">Cero Puntos</option>
                   </select>
                 </div>
               </div>
